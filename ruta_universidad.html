@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_1172e6dedb17fb68c649f682bd9e866d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_1172e6dedb17fb68c649f682bd9e866d" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_1172e6dedb17fb68c649f682bd9e866d = L.map(
+                "map_1172e6dedb17fb68c649f682bd9e866d",
+                {
+                    center: [10.4264302, -75.5376717],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 17,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_0ca7d4ceea26f05233c32e839e6aa486 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_0ca7d4ceea26f05233c32e839e6aa486.addTo(map_1172e6dedb17fb68c649f682bd9e866d);
+        
+    
+            var marker_ff685c91721d1fde5c0b76bbc79130fe = L.marker(
+                [10.4264302, -75.5376717],
+                {
+}
+            ).addTo(map_1172e6dedb17fb68c649f682bd9e866d);
+        
+    
+            var icon_ed91ade5e1e35060a4ee5e2843104b64 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_50d4fd3fe540b9fb8d730976eec5cb09 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4049a3a26dea59a6ddf52838512babf8 = $(`<div id="html_4049a3a26dea59a6ddf52838512babf8" style="width: 100.0%; height: 100.0%;">Universidad Rafael Núñez - Sede Principal</div>`)[0];
+                popup_50d4fd3fe540b9fb8d730976eec5cb09.setContent(html_4049a3a26dea59a6ddf52838512babf8);
+            
+        
+
+        marker_ff685c91721d1fde5c0b76bbc79130fe.bindPopup(popup_50d4fd3fe540b9fb8d730976eec5cb09)
+        ;
+
+        
+    
+    
+                marker_ff685c91721d1fde5c0b76bbc79130fe.setIcon(icon_ed91ade5e1e35060a4ee5e2843104b64);
+            
+    
+            var poly_line_6901638998e9afbfe42dcf1a799652df = L.polyline(
+                [[10.4274302, -75.53867170000001], [10.4274302, -75.5366717], [10.425430200000001, -75.5366717], [10.425430200000001, -75.53867170000001], [10.4274302, -75.53867170000001]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_1172e6dedb17fb68c649f682bd9e866d);
+        
+    
+            poly_line_6901638998e9afbfe42dcf1a799652df.bindTooltip(
+                `<div>
+                     Ruta alrededor de la universidad
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

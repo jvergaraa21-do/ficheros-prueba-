@@ -1,0 +1,115 @@
+"""
+Control simple por "waypoints" para un Tello (djitellopy).
+Waypoints: lista de (x, y, z, yaw)
+ - x: adelante (cm, + hacia adelante, - hacia atrás)
+ - y: derecha (cm, + derecha, - izquierda)
+ - z: arriba (cm, + arriba, - abajo)
+ - yaw: rotación absoluta en grados respecto al inicio (opcional, usa None si no quieres rotar)
+El script convierte waypoints en movimientos relativos secuenciales.
+"""
+
+from djitellopy import Tello
+import time
+import math
+
+# Configura tus waypoints aquí (ejemplo)
+# Interpretación: punto relativo al punto anterior (o absoluto si quieres hacerlo así)
+WAYPOINTS = [
+    (100, 0, 0, None),   # avanzar 100 cm
+    (0, 100, 0, None),   # moverse 100 cm a la derecha
+    (0, 0, 50, None),    # subir 50 cm
+    (-100, 0, 0, None),  # retroceder 100 cm
+    (0, -100, 0, None),  # izquierda 100 cm
+]
+
+# Función que ejecuta el plan
+def fly_waypoints(tello: Tello, waypoints):
+    # Despegar
+    tello.takeoff()
+    time.sleep(2)
+
+    # Tello tiene límites: típicamente 20-500 cm por comando dependiendo de método
+    # djitellopy ofrece move_forward/back/left/right/up/down que aceptan int cm (20-500)
+    for wp in waypoints:
+        dx, dy, dz, yaw = wp
+
+        # Manejo del movimiento en ejes: convertimos cada componente en llamados
+        # Preferimos usar los comandos move_* (relativos en cm)
+        # Eje X (adelante/atrás)
+        if dx != 0:
+            dist = int(round(abs(dx)))
+            if dist > 500:
+                print(f"[WARN] distancia X {dist} > 500 cm, la estoy truncando a 500")
+                dist = 500
+            if dx > 0:
+                print(f"Adelante {dist} cm")
+                tello.move_forward(dist)
+            else:
+                print(f"Atrás {dist} cm")
+                tello.move_back(dist)
+            time.sleep(1)
+
+        # Eje Y (derecha/izquierda)
+        if dy != 0:
+            dist = int(round(abs(dy)))
+            if dist > 500:
+                print(f"[WARN] distancia Y {dist} > 500 cm, la estoy truncando a 500")
+                dist = 500
+            if dy > 0:
+                print(f"Derecha {dist} cm")
+                tello.move_right(dist)
+            else:
+                print(f"Izquierda {dist} cm")
+                tello.move_left(dist)
+            time.sleep(1)
+
+        # Eje Z (arriba/abajo)
+        if dz != 0:
+            dist = int(round(abs(dz)))
+            if dist > 500:
+                print(f"[WARN] distancia Z {dist} > 500 cm, la estoy truncando a 500")
+                dist = 500
+            if dz > 0:
+                print(f"Subir {dist} cm")
+                tello.move_up(dist)
+            else:
+                print(f"Bajar {dist} cm")
+                tello.move_down(dist)
+            time.sleep(1)
+
+        # Yaw opcional (rotación absoluta aproximada)
+        if yaw is not None:
+            # djitellopy no tiene comando para establecer yaw absoluto fácil,
+            # pero puedes usar clockwise/ccw con grados.
+            # Aquí hacemos una rotación relativa simple.
+            # Si quieres yaw absoluto debes llevar cuenta del yaw actual.
+            target = int(round(yaw)) % 360
+            print(f"Rotar a {target}° (aprox, relativo)")
+            # Ejemplo simplificado: rotar clockwise target grados
+            # Ajusta según tu tracking de orientación si necesitas exactitud
+            tello.rotate_clockwise(target)
+            time.sleep(1)
+
+    # Aterrizar al final
+    print("Misión completada — aterrizando")
+    tello.land()
+    time.sleep(2)
+
+
+if __name__ == "__main__":
+    tello = Tello()
+    # conecta a la red wifi del Tello o, si usas emulador, adapta la conexión
+    tello.connect()
+    print("Batería:", tello.get_battery())
+
+    try:
+        fly_waypoints(tello, WAYPOINTS)
+    except Exception as e:
+        print("Error durante el vuelo:", e)
+        print("Intentando aterrizar de emergencia...")
+        try:
+            tello.land()
+        except:
+            pass
+    finally:
+        tello.end()
